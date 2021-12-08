@@ -17,4 +17,8 @@ urlpatterns = [
     path('add_student_save',adminviews.add_student_save,name="add_student_save"),
     path('addsubject/',adminviews.addsubject, name='addsubject'),
     path('add_subject_save',adminviews.add_subject_save,name="add_subject_save"),
+    path('managestaff',adminviews.managestaff,name="managestaff"),
+    path('managestudent',adminviews.managestudent,name="managestudent"),
+    path('managecourse/',adminviews.managecourse,name="managecourse"),
+    path('managesubject/',adminviews.managesubject,name="managesubject"),
 ]

@@ -112,3 +112,20 @@ def add_subject_save(request):
     except:   
         messages.error(request,"Failed to Add Subject")
         return HttpResponseRedirect(reverse("addsubject"))    
+
+
+def managestaff(request):
+    staffs=Staffs.objects.all()
+    return render(request, 'AdminViews/managestaff.html',{'staffs':staffs})
+
+def managestudent(request):
+    students=Student.objects.all()
+    return render(request, 'AdminViews/managestudent.html',{'students':students})
+
+def managecourse(request):
+    courses = Course.objects.all()
+    return render(request, 'AdminViews/managecourse.html',{'courses':courses})
+
+def managesubject(request):
+    subjects = Subject.objects.all()
+    return render(request, 'AdminViews/managesubject.html',{'subjects':subjects})
