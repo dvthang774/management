@@ -21,4 +21,6 @@ urlpatterns = [
     path('managestudent',adminviews.managestudent,name="managestudent"),
     path('managecourse/',adminviews.managecourse,name="managecourse"),
     path('managesubject/',adminviews.managesubject,name="managesubject"),
+    path('editstaff/<str:staff_id>',adminviews.editstaff),
+    
 ]

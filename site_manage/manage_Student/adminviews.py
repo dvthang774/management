@@ -15,7 +15,7 @@ def addstaff(request):
 
 def add_staff_save(request):
     if request.method!="POST":
-        return HttpResponse("Method Not Allowed")
+        return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
         first_name=request.POST.get("first_name")
         last_name=request.POST.get("last_name")
@@ -41,7 +41,7 @@ def addcourse(request):
 
 def add_course_save(request):
     if request.method!="POST":
-        return HttpResponse("Method Not Allowed")
+        return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
         course=request.POST.get("course")
         try:
@@ -60,7 +60,7 @@ def addstudent(request):
 
 def add_student_save(request):
     if request.method!="POST":
-        return HttpResponse("Method Not Allowed")
+        return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
         first_name=request.POST.get("first_name")
         last_name=request.POST.get("last_name")
@@ -97,7 +97,7 @@ def addsubject(request):
 
 def add_subject_save(request):
     if request.method!="POST":
-        return HttpResponse("Method Not Allowed")
+        return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
         subject_name=request.POST.get('subject_name')
         course_id=request.POST.get('course')
@@ -129,3 +129,7 @@ def managecourse(request):
 def managesubject(request):
     subjects = Subject.objects.all()
     return render(request, 'AdminViews/managesubject.html',{'subjects':subjects})
+
+def editstaff(request, staff_id):
+    staff=Staffs.objects.get(admin=staff_id)    
+    return render(request, 'AdminViews/editstaff.html',{'staff':staff})
