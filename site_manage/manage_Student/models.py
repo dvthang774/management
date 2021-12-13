@@ -51,6 +51,7 @@ class Subject(models.Model):
 class Student(models.Model):
     id = models.AutoField(primary_key=True)
     admin = models.OneToOneField(CustomUsers, on_delete=models.CASCADE)
+    student_code = models.CharField(max_length=255)
     gender=models.CharField(max_length=255)
     profile_pic = models.FileField()
     address = models.TextField()

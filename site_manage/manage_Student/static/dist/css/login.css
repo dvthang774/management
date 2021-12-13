@@ -1,5 +1,5 @@
 .login-page{
     background-image: url(https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.6435-9/135800098_430137221757514_4157383463445548708_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=Y7Ll9UhHK4sAX9kxtxV&tn=uGqexnACpVrbuFND&_nc_ht=scontent.fsgn2-3.fna&oh=83f3f3b7f5f40fa0d20978c0bc0d3a90&oe=61BDBBCE);
-    background-size: 100vh;
+    background-size: 100%;
     backdrop-filter: blur(7px);
 }

@@ -71,16 +71,23 @@ def add_student_save(request):
         session_start=request.POST.get('session_start')
         session_end=request.POST.get('session_end')
         course_id=request.POST.get('course')
+        student_code=request.POST.get('student_code')
         gender=request.POST.get('sex')
+        profile_pic = request.FILES['profile_pic']
+        fs = FileSystemStorage()
+        filename = fs.save(profile_pic.name, profile_pic)
+        profile_pic_url = fs.url(filename)
+
     try:   
         user=CustomUsers.objects.create_user(username=username,password=password,email=email,last_name=last_name,first_name=first_name,user_type=3,)
         user.student.address=address
+        user.student.student_code=student_code
         course_obj=Course.objects.get(id=course_id)
         user.student.course_id=course_obj
         user.student.session_start=session_start
         user.student.session_end=session_end
         user.student.gender=gender
-        user.student.profile_pic=""
+        user.student.profile_pic=profile_pic_url
         user.save()
         messages.success(request,"Successfully Added Student")
         return HttpResponseRedirect(reverse("addstudent"))    
@@ -133,3 +140,123 @@ def managesubject(request):
 def editstaff(request, staff_id):
     staff=Staffs.objects.get(admin=staff_id)    
     return render(request, 'AdminViews/editstaff.html',{'staff':staff})
+
+
+def edit_staff_save(request):
+    if request.method!="POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        staff_id=request.POST.get("staff_id")
+        first_name=request.POST.get("first_name")
+        last_name=request.POST.get("last_name")
+        username=request.POST.get("username")
+        email=request.POST.get("email")
+        address=request.POST.get("address")
+        try:    
+            user=CustomUsers.objects.get(id=staff_id)
+            user.first_name=first_name
+            user.last_name=last_name
+            user.username=username
+            user.email=email
+            user.save()
+
+            staff_model=Staffs.objects.get(admin=staff_id)
+            staff_model.address=address
+            staff_model.save()  
+            messages.success(request,"Successfully Edited Staff")
+            return HttpResponseRedirect("/editstaff/"+staff_id)    
+        except:   
+            messages.error(request,"Failed to Edit Staff")
+            return HttpResponseRedirect("/editstaff/"+staff_id)
+
+
+def editstudent(request, student_id):
+    courses = Course.objects.all()
+    student=Student.objects.get(admin=student_id)    
+    return render(request, 'AdminViews/editstudent.html',{'student':student,'courses':courses})
+
+
+def edit_student_save(request):
+    if request.method!="POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        student_id=request.POST.get("student_id")
+        first_name=request.POST.get("first_name")
+        last_name=request.POST.get("last_name")
+        username=request.POST.get("username")
+        email=request.POST.get("email")
+        address=request.POST.get("address")
+        session_start=request.POST.get('session_start')
+        session_end=request.POST.get('session_end')
+        course_id=request.POST.get('course')
+        student_code=request.POST.get('student_code')
+        gender=request.POST.get('sex')
+        
+        if request.FILES['profile_pic']:
+            profile_pic = request.FILES['profile_pic']
+            fs = FileSystemStorage()
+            filename = fs.save(profile_pic.name, profile_pic)
+            profile_pic_url = fs.url(filename)
+        else:
+            profile_pic_url=None
+        
+
+        user=CustomUsers.objects.get(id=student_id)
+        user.first_name=first_name
+        user.last_name=last_name
+        user.username=username
+        user.email=email 
+        user.student
+        user.save()
+    try:           
+        student=Student.objects.get(admin=student_id)
+        student.address=address
+        student.session_start_year=session_start
+        student.session_end_year=session_end
+        student.gender=gender
+        student.student_code=student_code
+        course=Course.objects.get(id=course_id)
+        student.course_id=course
+        if profile_pic_url!=None:
+            student.profile_pic=profile_pic_url
+
+        student.save()
+        messages.success(request,"Successfully Edited Student")
+        return HttpResponseRedirect("/editstudent/"+student_id)   
+    except: 
+        messages.error(request,"Failed to Edit Student")
+        return HttpResponseRedirect("/editstudent/"+student_id)
+
+
+def editcourse(request, course_id):
+    course=Course.objects.get(id=course_id)    
+    return render(request, 'AdminViews/editcourse.html',{'course':course})
+    
+
+def edit_course_save(request):
+    if request.method!="POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        course_id=request.POST.get('course_id')
+        course_name=request.POST.get('course')
+    try: 
+        course=Course.objects.get(id=course_id)   
+        course.course_name=course_name
+        course.save()
+
+        messages.success(request,"Successfully Edited Course")
+        return HttpResponseRedirect("/editcourse/"+course_id)
+    except:  
+        messages.error(request,"Failed to Edit Course")
+        return HttpResponseRedirect("/editcourse/"+course_id)
+
+
+
+def edit_subject_save(request):
+    pass
+
+def editsubject(request):
+    pass
+
+
+

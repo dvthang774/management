@@ -22,5 +22,13 @@ urlpatterns = [
     path('managecourse/',adminviews.managecourse,name="managecourse"),
     path('managesubject/',adminviews.managesubject,name="managesubject"),
     path('editstaff/<str:staff_id>',adminviews.editstaff),
-    
+    path('edit_staff_save',adminviews.edit_staff_save),
+    path('editstudent/<str:student_id>/',adminviews.editstudent),
+    path('edit_student_save',adminviews.edit_student_save),
+
+    path('editsubject/<str:subject_id>',adminviews.editsubject),
+    path('edit_subject_save',adminviews.edit_subject_save),
+    path('editcourse/<str:course_id>/',adminviews.editcourse),
+    path('edit_course_save',adminviews.edit_course_save),
+
 ]
