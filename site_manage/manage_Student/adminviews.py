@@ -192,7 +192,7 @@ def edit_student_save(request):
         student_code=request.POST.get('student_code')
         gender=request.POST.get('sex')
         
-        if request.FILES['profile_pic']:
+        if request.FILES.get('profile_pic',False):
             profile_pic = request.FILES['profile_pic']
             fs = FileSystemStorage()
             filename = fs.save(profile_pic.name, profile_pic)
@@ -253,10 +253,35 @@ def edit_course_save(request):
 
 
 def edit_subject_save(request):
-    pass
+    if request.method!="POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        subject_id=request.POST.get('subject_id')
+        subject_name=request.POST.get('subject_name')
+        staff_id=request.POST.get('staff')
+        course_id=request.POST.get('course')
 
-def editsubject(request):
-    pass
+        try: 
+            subject=Subject.objects.get(id=subject_id)   
+            subject.subject_name=subject_name
+            staff=CustomUsers.objects.get(id=staff_id)
+            course=Course.objects.get(id=course_id)
+            subject.staff_id=staff
+            subject.course_id=course
+            subject.save()
+
+            messages.success(request,"Successfully Edited Subject")
+            return HttpResponseRedirect("/editsubject/"+subject_id)
+        except:  
+            messages.error(request,"Failed to Edit Subject")
+            return HttpResponseRedirect("/editsubject/"+subject_id)
+    
+
+def editsubject(request, subject_id):
+    subject=Subject.objects.get(id=subject_id)
+    courses=Course.objects.all()
+    staffs=CustomUsers.objects.filter(user_type=2)
+    return render(request,'AdminViews/editsubject.html',{'subject':subject, 'courses':courses, 'staffs':staffs})
 
 
 
